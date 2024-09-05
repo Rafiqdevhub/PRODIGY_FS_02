@@ -41,7 +41,7 @@ const Login = () => {
 
     try {
       const result = await axios.post(
-        "http://localhost:3000/auth/login",
+        "http://localhost:3000/auth/admin/login",
         values
       );
       if (result.data.loginStatus) {
