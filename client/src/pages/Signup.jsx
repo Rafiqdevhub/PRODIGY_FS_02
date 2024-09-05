@@ -23,7 +23,6 @@ const Signup = () => {
       if (result.data.registerStatus) {
         setSuccess("User registered successfully!");
         setError(null);
-        // Redirect to login page after successful signup
         setTimeout(() => {
           navigate("/login");
         }, 2000);
