@@ -19,7 +19,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.static("Public"));
 
-app.use("/auth", adminRoute);
+app.use("/auth/admin", adminRoute);
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
