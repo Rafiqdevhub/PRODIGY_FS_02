@@ -9,7 +9,8 @@
 }
 
 .signupPage,
-.loginForm {
+.loginForm,
+.homePage {
   background-color: rgba(1, 32, 93, 0.6);
   color: white;
 }
