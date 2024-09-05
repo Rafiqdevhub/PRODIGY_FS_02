@@ -8,32 +8,65 @@ const Login = () => {
     email: "",
     password: "",
   });
+
+  const [errors, setErrors] = useState({});
   const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
   const navigate = useNavigate();
-  axios.defaults.withCredentials = true;
+
+  const validateForm = () => {
+    let formErrors = {};
+
+    if (!values.email) {
+      formErrors.email = "Email is required.";
+    } else if (!/\S+@\S+\.\S+/.test(values.email)) {
+      formErrors.email = "Email is invalid.";
+    }
+
+    if (!values.password) {
+      formErrors.password = "Password is required.";
+    }
+
+    return formErrors;
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    const validationErrors = validateForm();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+
     try {
       const result = await axios.post(
-        "http://localhost:3000/auth/admin/login",
+        "http://localhost:3000/auth/login",
         values
       );
       if (result.data.loginStatus) {
-        localStorage.setItem("valid", true);
-        navigate("/dashboard");
+        setSuccess("User logged in successfully!");
+        setError(null);
+        setErrors({});
+        setTimeout(() => {
+          navigate("/dashboard");
+        }, 2000);
       } else {
         setError(result.data.Error);
+        setSuccess(null);
       }
     } catch (err) {
       console.log(err);
+      setError("An error occurred. Please try again later.");
+      setSuccess(null);
     }
   };
 
   return (
     <div className="d-flex justify-content-center align-items-center vh-100 loginPage">
       <div className="p-3 rounded w-25 border loginForm">
-        {error && <div className="text-warning">{error}</div>}
+        {error && <div className="text-danger">{error}</div>}
+        {success && <div className="text-success">{success}</div>}{" "}
         <h2>Login Page</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
@@ -46,9 +79,13 @@ const Login = () => {
               autoComplete="off"
               placeholder="Enter Email"
               onChange={(e) => setValues({ ...values, email: e.target.value })}
-              className="form-control rounded-0"
+              className={`form-control rounded-0 ${
+                errors.email ? "is-invalid" : ""
+              }`}
             />
+            {errors.email && <div className="text-danger">{errors.email}</div>}
           </div>
+
           <div className="mb-3">
             <label htmlFor="password">
               <strong>Password:</strong>
@@ -60,8 +97,13 @@ const Login = () => {
               onChange={(e) =>
                 setValues({ ...values, password: e.target.value })
               }
-              className="form-control rounded-0"
+              className={`form-control rounded-0 ${
+                errors.password ? "is-invalid" : ""
+              }`}
             />
+            {errors.password && (
+              <div className="text-danger">{errors.password}</div>
+            )}
           </div>
           <button className="btn btn-success w-100 rounded-0 mb-2">
             Log in
