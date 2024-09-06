@@ -33,8 +33,8 @@ const Category = () => {
             </tr>
           </thead>
           <tbody>
-            {category.map((c) => (
-              <tr>
+            {category.map((c, index) => (
+              <tr key={index}>
                 <td>{c.name}</td>
               </tr>
             ))}
