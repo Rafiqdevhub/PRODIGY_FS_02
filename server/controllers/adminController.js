@@ -282,7 +282,7 @@ const deleteEmployeeById = (req, res) => {
 };
 
 const getAdminCount = (req, res) => {
-  const sql = "SELECT COUNT(id) AS admin FROM admin";
+  const sql = "SELECT COUNT(id) AS admin FROM usersregister";
   connectionDb.query(sql, (err, result) => {
     if (err) {
       console.error("Database query failed:", err);
@@ -321,7 +321,7 @@ const getSalaryCount = (req, res) => {
 };
 
 const getAdminRecords = (req, res) => {
-  const sql = "SELECT * FROM admin";
+  const sql = "SELECT * FROM usersregister";
   connectionDb.query(sql, (err, result) => {
     if (err) {
       console.error("Database query failed:", err);
