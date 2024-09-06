@@ -122,7 +122,7 @@ const getCategory = (req, res) => {
   const sql = "SELECT * FROM category";
 
   // Execute the query to fetch categories
-  con.query(sql, (err, result) => {
+  connectionDb.query(sql, (err, result) => {
     if (err) {
       // Log the error for debugging purposes
       console.error("Failed to fetch categories:", err);
@@ -140,7 +140,7 @@ const addCategory = (req, res) => {
   const sql = "INSERT INTO category (`name`) VALUES (?)";
 
   // Execute the query to insert a new category
-  con.query(sql, [req.body.category], (err, result) => {
+  connectionDb.query(sql, [req.body.category], (err, result) => {
     if (err) {
       // Log the error for debugging purposes
       console.error("Failed to add category:", err);
@@ -181,7 +181,7 @@ const addEmployee = (req, res) => {
     ];
 
     // Execute the query to insert the new employee
-    con.query(sql, [values], (err, result) => {
+    connectionDb.query(sql, [values], (err, result) => {
       if (err) {
         // Log the error for debugging purposes
         console.error("Failed to add employee:", err);
@@ -200,7 +200,7 @@ const getEmployees = (req, res) => {
   const sql = "SELECT * FROM employee";
 
   // Execute the query to fetch all employees
-  con.query(sql, (err, result) => {
+  connectionDb.query(sql, (err, result) => {
     if (err) {
       // Log the error for debugging purposes
       console.error("Failed to fetch employees:", err);
@@ -216,7 +216,7 @@ const getEmployees = (req, res) => {
 const getEmployeeById = (req, res) => {
   const id = req.params.id;
   const sql = "SELECT * FROM employee WHERE id = ?";
-  con.query(sql, [id], (err, result) => {
+  connectionDb.query(sql, [id], (err, result) => {
     if (err) {
       console.error("Database query failed:", err);
       return res
@@ -244,7 +244,7 @@ const editEmployeeById = (req, res) => {
     req.body.address,
     req.body.category_id,
   ];
-  con.query(sql, [...values, id], (err, result) => {
+  connectionDb.query(sql, [...values, id], (err, result) => {
     if (err) {
       console.error("Database update failed:", err);
       return res
@@ -263,7 +263,7 @@ const editEmployeeById = (req, res) => {
 const deleteEmployeeById = (req, res) => {
   const id = req.params.id;
   const sql = "DELETE FROM employee WHERE id = ?";
-  con.query(sql, [id], (err, result) => {
+  connectionDb.query(sql, [id], (err, result) => {
     if (err) {
       console.error("Database delete failed:", err);
       return res
@@ -283,7 +283,7 @@ const deleteEmployeeById = (req, res) => {
 
 const getAdminCount = (req, res) => {
   const sql = "SELECT COUNT(id) AS admin FROM admin";
-  con.query(sql, (err, result) => {
+  connectionDb.query(sql, (err, result) => {
     if (err) {
       console.error("Database query failed:", err);
       return res
@@ -296,7 +296,7 @@ const getAdminCount = (req, res) => {
 
 const getEmployeeCount = (req, res) => {
   const sql = "SELECT COUNT(id) AS employee FROM employee";
-  con.query(sql, (err, result) => {
+  connectionDb.query(sql, (err, result) => {
     if (err) {
       console.error("Database query failed:", err);
       return res
@@ -309,7 +309,7 @@ const getEmployeeCount = (req, res) => {
 
 const getSalaryCount = (req, res) => {
   const sql = "SELECT SUM(salary) AS salaryOFEmp FROM employee";
-  con.query(sql, (err, result) => {
+  connectionDb.query(sql, (err, result) => {
     if (err) {
       console.error("Database query failed:", err);
       return res
@@ -322,7 +322,7 @@ const getSalaryCount = (req, res) => {
 
 const getAdminRecords = (req, res) => {
   const sql = "SELECT * FROM admin";
-  con.query(sql, (err, result) => {
+  connectionDb.query(sql, (err, result) => {
     if (err) {
       console.error("Database query failed:", err);
       return res
