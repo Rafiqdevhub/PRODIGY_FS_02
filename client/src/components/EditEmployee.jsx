@@ -16,7 +16,7 @@ const EditEmployee = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/auth/category")
+      .get("http://localhost:3000/auth/admin/category")
       .then((result) => {
         if (result.data.Status) {
           setCategory(result.data.Result);
@@ -27,7 +27,7 @@ const EditEmployee = () => {
       .catch((err) => console.log(err));
 
     axios
-      .get("http://localhost:3000/auth/employee/" + id)
+      .get("http://localhost:3000/auth/admin/employee/" + id)
       .then((result) => {
         setEmployee({
           ...employee,
@@ -44,7 +44,7 @@ const EditEmployee = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .put("http://localhost:3000/auth/edit_employee/" + id, employee)
+      .put("http://localhost:3000/auth/admin/edit_employee/" + id, employee)
       .then((result) => {
         if (result.data.Status) {
           navigate("/dashboard/employee");
@@ -136,7 +136,11 @@ const EditEmployee = () => {
               }
             >
               {category.map((c) => {
-                return <option value={c.id}>{c.name}</option>;
+                return (
+                  <option key={c.id} value={c.id}>
+                    {c.name}
+                  </option>
+                );
               })}
             </select>
           </div>
