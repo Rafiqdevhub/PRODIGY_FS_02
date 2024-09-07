@@ -14,6 +14,7 @@ import AddEmployee from "./components/AddEmployee";
 import EditEmployee from "./components/EditEmployee";
 import EmployeeLogin from "./components/EmployeeLogin";
 import EmployeeDetail from "./components/EmployeeDetail";
+import Verify from "./components/Verify";
 
 const router = createBrowserRouter([
   {
@@ -21,8 +22,16 @@ const router = createBrowserRouter([
     element: <HomePage />,
   },
   {
+    path: "/verify",
+    element: <Verify />,
+  },
+  {
     path: "/signup",
     element: <Signup />,
+  },
+  {
+    path: "/adminlogin",
+    element: <Login />,
   },
   {
     path: "/login",

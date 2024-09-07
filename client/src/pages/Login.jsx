@@ -45,12 +45,8 @@ const Login = () => {
         values
       );
       if (result.data.loginStatus) {
-        setSuccess("User logged in successfully!");
-        setError(null);
-        setErrors({});
-        setTimeout(() => {
-          navigate("/dashboard");
-        }, 2000);
+        localStorage.setItem("valid", true);
+        navigate("/dashboard");
       } else {
         setError(result.data.Error);
         setSuccess(null);

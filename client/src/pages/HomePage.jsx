@@ -8,11 +8,10 @@ const HomePage = () => {
         <h1>Welcome to Employee Management System</h1>
         <p>Please choose an option below:</p>
         <div className="mt-4">
-          <Link to="/signup">
-            <button className="btn btn-primary mx-2">Sign Up</button>
-          </Link>
-          <Link to="/login">
-            <button className="btn btn-secondary mx-2">Log In</button>
+          <Link to="/verify">
+            <button className="btn btn-primary mx-2">
+              Register as an Employee or Admin
+            </button>
           </Link>
         </div>
       </div>
