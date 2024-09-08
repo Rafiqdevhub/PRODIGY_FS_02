@@ -77,19 +77,17 @@ const adminLogin = (req, res) => {
 
         if (passwordMatch) {
           const email = result[0].email;
-          const username = result[0].username; // Get the admin's username
+          const username = result[0].username;
           const token = jwt.sign(
             { role: "admin", email: email, id: result[0].id },
             "jwt_secret_key",
             { expiresIn: "1d" }
           );
 
-          // Set the token as a cookie
           res.cookie("token", token, {
             httpOnly: true,
           });
 
-          // Send the admin's name and email in the response
           return res.status(200).json({
             loginStatus: true,
             admin: {
@@ -121,55 +119,44 @@ const adminLogin = (req, res) => {
 const getCategory = (req, res) => {
   const sql = "SELECT * FROM category";
 
-  // Execute the query to fetch categories
   connectionDb.query(sql, (err, result) => {
     if (err) {
-      // Log the error for debugging purposes
       console.error("Failed to fetch categories:", err);
       return res
         .status(500)
         .json({ Status: false, Error: "Internal Server Error" });
     }
-    // Successfully fetched categories
     return res.status(200).json({ Status: true, Result: result });
   });
 };
 
-// Function to add a new category
 const addCategory = (req, res) => {
   const sql = "INSERT INTO category (`name`) VALUES (?)";
 
-  // Execute the query to insert a new category
   connectionDb.query(sql, [req.body.category], (err, result) => {
     if (err) {
-      // Log the error for debugging purposes
       console.error("Failed to add category:", err);
       return res
         .status(500)
         .json({ Status: false, Error: "Internal Server Error" });
     }
-    // Successfully added category
     return res.status(201).json({ Status: true });
   });
 };
 
-// Function to add a new employee
 const addEmployee = (req, res) => {
   const sql = `INSERT INTO employee 
     (name,email,password,address,salary,image,category_id) 
     VALUES (?)`;
 
-  // Hash the employee's password before saving it
   bcrypt.hash(req.body.password, 10, (err, hash) => {
     if (err) {
-      // Log the error for debugging purposes
       console.error("Password hashing failed:", err);
       return res
         .status(500)
         .json({ Status: false, Error: "Internal Server Error" });
     }
 
-    // Prepare the values for the new employee record
     const values = [
       req.body.name,
       req.body.email,
@@ -180,35 +167,28 @@ const addEmployee = (req, res) => {
       req.body.category_id,
     ];
 
-    // Execute the query to insert the new employee
     connectionDb.query(sql, [values], (err, result) => {
       if (err) {
-        // Log the error for debugging purposes
         console.error("Failed to add employee:", err);
         return res
           .status(500)
           .json({ Status: false, Error: "Internal Server Error" });
       }
-      // Successfully added employee
       return res.status(201).json({ Status: true });
     });
   });
 };
 
-// Function to get all employees
 const getEmployees = (req, res) => {
   const sql = "SELECT * FROM employee";
 
-  // Execute the query to fetch all employees
   connectionDb.query(sql, (err, result) => {
     if (err) {
-      // Log the error for debugging purposes
       console.error("Failed to fetch employees:", err);
       return res
         .status(500)
         .json({ Status: false, Error: "Internal Server Error" });
     }
-    // Successfully fetched employees
     return res.status(200).json({ Status: true, Result: result });
   });
 };
